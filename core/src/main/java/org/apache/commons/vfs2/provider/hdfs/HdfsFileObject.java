@@ -234,7 +234,7 @@ public class HdfsFileObject extends AbstractFileObject<HdfsFileSystem>
         int i = 0;
         for (final FileStatus status : files)
         {
-            children[i++] = status.getPath().getName();
+            children[i++] = status.getPath().getName().intern();
         }
         return children;
     }
@@ -254,7 +254,7 @@ public class HdfsFileObject extends AbstractFileObject<HdfsFileSystem>
         for (int i = 0; i < children.length; i++)
         {
             final Path p = new Path(this.path, children[i]);
-            fo[i] = this.fs.resolveFile(p.toUri().toString());
+            fo[i] = this.fs.resolveFile(p.toUri().toString().intern());
         }
         return fo;
     }

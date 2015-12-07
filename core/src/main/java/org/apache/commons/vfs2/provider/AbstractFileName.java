@@ -50,7 +50,7 @@ public abstract class AbstractFileName implements FileName
         {
             if (absPath.length() > 1 && absPath.endsWith("/"))
             {
-                this.absPath = absPath.substring(0, absPath.length() - 1);
+                this.absPath = absPath.substring(0, absPath.length() - 1).intern();
             }
             else
             {
@@ -141,7 +141,7 @@ public abstract class AbstractFileName implements FileName
             }
             else
             {
-                baseName = getPath().substring(idx + 1);
+                baseName = getPath().substring(idx + 1).intern();
             }
         }
 
@@ -158,7 +158,7 @@ public abstract class AbstractFileName implements FileName
     {
         if (VFS.isUriStyle())
         {
-            return absPath + getUriTrailer();
+            return new String(absPath + getUriTrailer()).intern();
         }
         return absPath;
     }
@@ -178,7 +178,7 @@ public abstract class AbstractFileName implements FileName
     {
         if (decodedAbsPath == null)
         {
-            decodedAbsPath = UriParser.decode(getPath());
+            decodedAbsPath = UriParser.decode(getPath()).intern();
         }
 
         return decodedAbsPath;
@@ -205,7 +205,7 @@ public abstract class AbstractFileName implements FileName
         }
         else
         {
-            parentPath = getPath().substring(0, idx);
+            parentPath = getPath().substring(0, idx).intern();
         }
         return createName(parentPath, FileType.FOLDER);
     }
@@ -284,7 +284,7 @@ public abstract class AbstractFileName implements FileName
         final StringBuilder buffer = new StringBuilder();
         appendRootUri(buffer, usePassword);
         buffer.append(useAbsolutePath ? absPath : getPath());
-        return buffer.toString();
+        return buffer.toString().intern();
     }
 
 
@@ -310,7 +310,7 @@ public abstract class AbstractFileName implements FileName
         }
         else if (basePathLen == 1)
         {
-            return path.substring(1);
+            return path.substring(1).intern();
         }
 
         final int maxlen = Math.min(basePathLen, pathLen);
@@ -327,7 +327,7 @@ public abstract class AbstractFileName implements FileName
         else if (pos == basePathLen && pos < pathLen && path.charAt(pos) == SEPARATOR_CHAR)
         {
             // A descendent of the base path
-            return path.substring(pos + 1);
+            return path.substring(pos + 1).intern();
         }
 
         // Strip the common prefix off the path
@@ -349,7 +349,7 @@ public abstract class AbstractFileName implements FileName
             pos = getPath().indexOf(SEPARATOR_CHAR, pos + 1);
         }
 
-        return buffer.toString();
+        return buffer.toString().intern();
     }
 
     /**
@@ -382,9 +382,10 @@ public abstract class AbstractFileName implements FileName
             return 0;
         }
         int depth = 1;
+        final String path = getPath();
         for (int pos = 0; pos > -1 && pos < len; depth++)
         {
-            pos = getPath().indexOf(SEPARATOR_CHAR, pos + 1);
+            pos = path.indexOf(SEPARATOR_CHAR, pos + 1);
         }
         return depth;
     }

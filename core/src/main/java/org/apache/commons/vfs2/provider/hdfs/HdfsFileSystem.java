@@ -108,7 +108,7 @@ public class HdfsFileSystem extends AbstractFileSystem
         {
             if (this.fs == null)
             {
-                final String hdfsUri = name.getRootURI();
+                final String hdfsUri = name.getRootURI().intern();
                 final HdfsFileSystemConfigBuilder builder = HdfsFileSystemConfigBuilder.getInstance();
                 final String configName = builder.getConfigName(getFileSystemOptions());
 

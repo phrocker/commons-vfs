@@ -110,7 +110,10 @@ public abstract class AbstractFileSystem
         {
             uri = rootName.getURI();
         }
-        this.rootURI = uri;
+        if ( null != uri)
+        	this.rootURI = uri.intern();
+        else
+        	this.rootURI = null;
     }
 
     /**

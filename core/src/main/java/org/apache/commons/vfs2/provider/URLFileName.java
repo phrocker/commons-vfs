@@ -67,7 +67,7 @@ public class URLFileName extends GenericFileName
         sb.append("?");
         sb.append(getQueryString());
 
-        return sb.toString();
+        return sb.toString().intern();
     }
 
     /**
@@ -103,7 +103,7 @@ public class URLFileName extends GenericFileName
         }
         sb.append("?");
         sb.append(getQueryString());
-        return sb.toString();
+        return sb.toString().intern();
     }
 
     /**
@@ -141,7 +141,7 @@ public class URLFileName extends GenericFileName
             sb.append("?");
             sb.append(getQueryString());
 
-            return sb.toString();
+            return sb.toString().intern();
         }
 
         return super.createURI();
@@ -159,6 +159,6 @@ public class URLFileName extends GenericFileName
         final StringBuilder sb = new StringBuilder(BUFFER_SIZE);
         appendRootUri(sb, true);
         sb.append(getPathQueryEncoded(charset));
-        return sb.toString();
+        return sb.toString().intern();
     }
 }

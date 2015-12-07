@@ -54,7 +54,7 @@ public class JarURLConnectionImpl
         this.url = file.getURL();
         this.content = content;
         this.parentURL = file.getURL();
-        this.entryName = file.getName().getPath();
+        this.entryName = file.getName().getPath().intern();
         this.file = file;
     }
 

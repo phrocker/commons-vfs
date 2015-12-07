@@ -55,7 +55,7 @@ public class URLFileNameParser extends HostFileNameParser
         UriParser.canonicalizePath(name, 0, name.length(), this);
         UriParser.fixSeparators(name);
         final FileType fileType = UriParser.normalisePath(name);
-        final String path = name.toString();
+        final String path = name.toString().intern();
 
         return new URLFileName(
             auth.getScheme(),
